@@ -18,12 +18,12 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  late MyRouterDelegate myRouterDelegate;
+  late AppRouterDelegate appRouterDelegate;
 
   @override
   void initState() {
     super.initState();
-    myRouterDelegate = MyRouterDelegate();
+    appRouterDelegate = AppRouterDelegate();
   }
 
   @override
@@ -33,7 +33,7 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme(context),
       home: Router(
-        routerDelegate: myRouterDelegate,
+        routerDelegate: appRouterDelegate,
         backButtonDispatcher: RootBackButtonDispatcher(),
       ),
     );

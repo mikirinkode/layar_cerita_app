@@ -5,14 +5,14 @@ import '../module/home/home_page.dart';
 import '../module/login/login_page.dart';
 import '../module/register/register_page.dart';
 
-class MyRouterDelegate extends RouterDelegate
+class AppRouterDelegate extends RouterDelegate
     with ChangeNotifier, PopNavigatorRouterDelegateMixin {
   final GlobalKey<NavigatorState> _navigatorKey;
 
-  MyRouterDelegate() : _navigatorKey = GlobalKey<NavigatorState>();
+  AppRouterDelegate() : _navigatorKey = GlobalKey<NavigatorState>();
 
   // Current navigation state
-  String _currentPath = '/login';
+  String _currentPath = '/home';
 
   String get currentPath => _currentPath;
 
