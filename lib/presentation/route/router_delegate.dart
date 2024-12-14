@@ -4,15 +4,18 @@ import 'package:flutter/widgets.dart';
 import '../module/home/home_page.dart';
 import '../module/login/login_page.dart';
 import '../module/register/register_page.dart';
+import 'path.dart';
 
 class AppRouterDelegate extends RouterDelegate
     with ChangeNotifier, PopNavigatorRouterDelegateMixin {
   final GlobalKey<NavigatorState> _navigatorKey;
 
-  AppRouterDelegate() : _navigatorKey = GlobalKey<NavigatorState>();
+  AppRouterDelegate(isLoggedIn)
+      : _navigatorKey = GlobalKey<NavigatorState>(),
+        _currentPath = isLoggedIn ? AppPath.home : AppPath.login;
 
   // Current navigation state
-  String _currentPath = '/home';
+  String _currentPath = AppPath.login;
 
   String get currentPath => _currentPath;
 
@@ -28,21 +31,22 @@ class AppRouterDelegate extends RouterDelegate
       key: _navigatorKey,
       pages: [
         // Add pages based on the current path
-        if (_currentPath == '/login')
+        if (_currentPath == AppPath.login)
           MaterialPage(
             key: const ValueKey('LoginPage'),
             child: LoginPage(
-              onNavigateToRegister: () => setPath('/register'),
+              onNavigateToRegister: () => setPath(AppPath.register),
             ),
           ),
-        if (_currentPath == '/register')
+        if (_currentPath == AppPath.register)
           MaterialPage(
             key: const ValueKey('RegisterPage'),
             child: RegisterPage(
-              onNavigateToLogin: () => setPath('/login'),
+              onNavigateToLogin: () => setPath(AppPath.login),
+              onNavigateToHome: () => setPath(AppPath.home),
             ),
           ),
-        if (_currentPath == '/home')
+        if (_currentPath == AppPath.home)
           MaterialPage(
             key: const ValueKey('HomePage'),
             child: HomePage(),
@@ -53,10 +57,10 @@ class AppRouterDelegate extends RouterDelegate
           return false;
         }
         // Handle back navigation
-        if (_currentPath == '/register') {
-          setPath('/login');
-        } else if (_currentPath == '/home') {
-          setPath('/login');
+        if (_currentPath == AppPath.register) {
+          setPath(AppPath.login);
+        } else if (_currentPath == AppPath.home) {
+          setPath(AppPath.login);
         }
         return true;
       },
