@@ -1,11 +1,14 @@
 class ApiConfig {
   ApiConfig._();
 
-
   static const Map<String, String> headers = {
     "Content-Type": "application/json",
   };
 
+  static Map<String, String> getHeadersWithAuth(String token) => {
+        ...headers,
+        "Authorization": "Bearer $token",
+      };
 }
 
 class Endpoints {

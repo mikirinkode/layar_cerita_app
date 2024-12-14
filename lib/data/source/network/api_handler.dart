@@ -6,14 +6,20 @@ import 'package:http/http.dart' as http;
 class ApiHandler {
   static Future<T> get<T>({
     required String url,
+    required Map<String, String> headers,
     required T Function(Map<String, dynamic>) fromJson,
     required String errorMessage,
   }) async {
-    debugPrint("[GET] url: $url");
+    debugPrint("ApiHandler::[GET] url: $url");
     try {
-      final response = await http.get(Uri.parse(url));
+      final response = await http.get(
+        Uri.parse(url),
+        headers: headers,
+      );
+
       if (response.statusCode == 200) {
         var body = json.decode(response.body);
+        debugPrint("ApiHandler::Success. response body: $body");
         return fromJson(body);
       } else {
         debugPrint(
@@ -34,8 +40,8 @@ class ApiHandler {
     required T Function(Map<String, dynamic>) fromJson,
     required String errorMessage,
   }) async {
-    debugPrint("[POST] url: $url");
-    debugPrint("[POST] body: $body");
+    debugPrint("ApiHandler::[POST] url: $url");
+    debugPrint("ApiHandler::[POST] request body: $body");
     try {
       final response = await http.post(
         Uri.parse(url),
@@ -44,6 +50,7 @@ class ApiHandler {
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
         var body = json.decode(response.body);
+        debugPrint("ApiHandler::Success. response body: $body");
         return fromJson(body);
       } else {
         debugPrint(

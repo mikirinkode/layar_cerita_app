@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:layar_cerita_app/presentation/global_widgets/error_state_view.dart';
+import 'package:layar_cerita_app/presentation/global_widgets/loading_indicator.dart';
 import 'package:layar_cerita_app/utils/ui_state.dart';
 import 'package:provider/provider.dart';
 
@@ -33,22 +34,7 @@ class RegisterPage extends StatelessWidget {
                 provider.registerState.when(
                   onInitial: () => const SizedBox(),
                   onLoading: (message) => Center(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).cardColor,
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      padding: UIUtils.paddingAll(16),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const CircularProgressIndicator(),
-                          UIUtils.widthSpace(8),
-                          Text(message ?? ''),
-                        ],
-                      ),
-                    ),
+                    child: LoadingIndicator(message: message),
                   ),
                   onError: (message) => ErrorStateView(
                     message: message,

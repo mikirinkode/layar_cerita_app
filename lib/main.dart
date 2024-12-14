@@ -6,6 +6,7 @@ import 'package:layar_cerita_app/presentation/module/register/register_page.dart
 
 import 'di/injection.dart';
 import 'presentation/module/home/home_page.dart';
+import 'presentation/module/home/home_provider.dart';
 import 'presentation/module/login/login_page.dart';
 import 'presentation/route/router_delegate.dart';
 import 'presentation/theme/app_theme.dart';
@@ -17,7 +18,7 @@ Future<void> main() async {
 
   final prefs = injection.sharedPreferencesService;
   final isLoggedIn = await prefs.getIsLoggedIn();
-  
+
   debugPrint("main");
   debugPrint("isLoggedIn: $isLoggedIn");
 
@@ -32,6 +33,11 @@ Future<void> main() async {
         ChangeNotifierProvider(
           create: (_) => LoginProvider(
             authRepository: injection.authRepository,
+          ),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => HomeProvider(
+            storyRepository: injection.restaurantRepository,
           ),
         ),
       ],

@@ -1,4 +1,4 @@
-import 'package:layar_cerita_app/data/source/network/response/login_result_response.dart';
+import 'package:layar_cerita_app/data/source/network/response/auth/login_result_response.dart';
 
 class LoginResponse {
   final bool error;

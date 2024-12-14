@@ -1,6 +1,7 @@
 import 'package:layar_cerita_app/data/source/network/response/api_response.dart';
-import 'package:layar_cerita_app/data/source/network/response/login_response.dart';
-import 'package:layar_cerita_app/data/source/network/response/register_response.dart';
+import 'package:layar_cerita_app/data/source/network/response/auth/login_response.dart';
+import 'package:layar_cerita_app/data/source/network/response/auth/register_response.dart';
+import 'package:layar_cerita_app/data/source/network/response/story/story_list_response.dart';
 
 import 'api_config.dart';
 import 'api_handler.dart';
@@ -27,6 +28,15 @@ class RemoteDataSource {
       body: body,
       fromJson: (json) => LoginResponse.fromJson(json),
       errorMessage: 'Failed to login user',
+    );
+  }
+
+  Future<StoryListResponse> getStoryList(String token) async {
+    return await ApiHandler.get(
+      url: Endpoints.stories,
+      headers: ApiConfig.getHeadersWithAuth(token),
+      fromJson: (json) => StoryListResponse.fromJson(json),
+      errorMessage: 'Failed to get story list',
     );
   }
 }
