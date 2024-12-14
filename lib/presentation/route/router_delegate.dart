@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:layar_cerita_app/presentation/module/story_detail/story_detail_page.dart';
+import 'package:layar_cerita_app/presentation/route/app_navigation_mixin.dart';
 
 import '../module/home/home_page.dart';
 import '../module/login/login_page.dart';
@@ -10,21 +11,14 @@ import 'app_path.dart';
 import 'route_argument.dart';
 
 class AppRouterDelegate extends RouterDelegate
-    with ChangeNotifier, PopNavigatorRouterDelegateMixin {
+    with ChangeNotifier, PopNavigatorRouterDelegateMixin, AppNavigationMixin {
   final GlobalKey<NavigatorState> _navigatorKey;
 
-  AppRouterDelegate(isLoggedIn)
-      : _navigatorKey = GlobalKey<NavigatorState>(),
-        // _rootPath = isLoggedIn ? AppPath.home : AppPath.login,
-        _navStack = [isLoggedIn ? AppPath.home : AppPath.login];
-
-  // Current navigation state
-  // String _rootPath = AppPath.login;
-
-  // Navigation stack
-  List<String> _navStack = [];
-
-  final Map<String, dynamic> _arguments = {};
+  AppRouterDelegate(isLoggedIn) : _navigatorKey = GlobalKey<NavigatorState>() {
+    navigateTo(
+      path: isLoggedIn ? AppPath.home : AppPath.login,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,9 +29,7 @@ class AppRouterDelegate extends RouterDelegate
         if (!route.didPop(result)) {
           return false;
         }
-        _navStack.removeLast();
-        _arguments.clear();
-        notifyListeners();
+        popLast();
         return true;
       },
     );
@@ -51,6 +43,9 @@ class AppRouterDelegate extends RouterDelegate
     /* DO NOTHING */
   }
 
+  @override
+  AppRouterDelegate get delegate => this;
+  
   List<AppPage> get pages => [
         AppPage(
           path: AppPath.login,
@@ -96,17 +91,17 @@ class AppRouterDelegate extends RouterDelegate
           page: MaterialPage(
             key: const ValueKey('StoryDetailPage'),
             child: StoryDetailPage(
-              storyId: _arguments[DetailArgs.storyId] as String? ?? "",
+              storyId: arguments[DetailArgs.storyId] as String? ?? "",
             ),
           ),
         ),
       ];
 
   List<Page> getPages() {
-    debugPrint("_navStack: $_navStack");
-    debugPrint("_arguments: $_arguments");
+    debugPrint("_navStack: $navStack");
+    debugPrint("_arguments: $arguments");
     final pageResult = pages
-        .where((page) => _navStack.contains(page.path))
+        .where((page) => navStack.contains(page.page.key ?? ""))
         .map((page) => page.page)
         .toList();
 
@@ -115,29 +110,6 @@ class AppRouterDelegate extends RouterDelegate
     return pageResult;
   }
 
-  void navigateTo({
-    required String path,
-    Map<String, dynamic>? arguments,
-  }) {
-    debugPrint('navigateTo: $path');
-    debugPrint('arguments: $arguments');
-    _navStack.add(path);
-    if (arguments != null) {
-      _arguments.addAll(arguments);
-    }
-    notifyListeners();
-  }
+  void triggerNotifyListeners() => notifyListeners();
 
-  void navigateToAndClearStack({
-    required String path,
-    Map<String, dynamic>? arguments,
-  }) {
-    debugPrint('navigateToAndClearStack: $path');
-    debugPrint('arguments: $arguments');
-    _navStack = [path];
-    if (arguments != null) {
-      _arguments.addAll(arguments);
-    }
-    notifyListeners();
-  }
 }
