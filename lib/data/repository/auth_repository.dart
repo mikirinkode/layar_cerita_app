@@ -28,7 +28,6 @@ class AuthRepository {
     }
   }
 
-
   Future<void> login({required LoginBody loginBody}) async {
     try {
       final result = await _remoteDataSource.login(loginBody: loginBody);
@@ -40,5 +39,9 @@ class AuthRepository {
     } catch (e) {
       return Future.error(e);
     }
+  }
+
+  Future<bool> getIsLoggedIn() {
+    return _sharedPreferencesService.getIsLoggedIn();
   }
 }

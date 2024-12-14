@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:layar_cerita_app/presentation/module/login/login_provider.dart';
 import 'package:layar_cerita_app/presentation/module/register/register_provider.dart';
+import 'package:layar_cerita_app/presentation/module/story_detail/story_detail_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:layar_cerita_app/presentation/module/register/register_page.dart';
 
@@ -16,8 +17,7 @@ Future<void> main() async {
 
   final injection = await Injection.instance.initialize();
 
-  final prefs = injection.sharedPreferencesService;
-  final isLoggedIn = await prefs.getIsLoggedIn();
+  final isLoggedIn = await injection.authRepository.getIsLoggedIn();
 
   debugPrint("main");
   debugPrint("isLoggedIn: $isLoggedIn");
@@ -37,7 +37,12 @@ Future<void> main() async {
         ),
         ChangeNotifierProvider(
           create: (_) => HomeProvider(
-            storyRepository: injection.restaurantRepository,
+            storyRepository: injection.storyRepository,
+          ),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => StoryDetailProvider(
+            storyRepository: injection.storyRepository,
           ),
         ),
       ],

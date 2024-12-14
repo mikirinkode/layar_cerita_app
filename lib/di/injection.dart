@@ -9,9 +9,7 @@ class Injection {
   static Injection? _instance;
 
   static AuthRepository? _authRepository;
-  static StoryRepository? _restaurantRepository;
-
-  static SharedPreferencesService? _sharedPreferencesService;
+  static StoryRepository? _storyRepository;
 
   Injection._internal() {
     _instance = this;
@@ -23,17 +21,17 @@ class Injection {
     final remoteDataSource = RemoteDataSource();
     final sharedPreferences = await SharedPreferences.getInstance();
 
-    _sharedPreferencesService = SharedPreferencesService(
+    final sharedPreferencesService = SharedPreferencesService(
       preferences: sharedPreferences,
     );
 
     _authRepository = AuthRepository(
-      sharedPreferencesService: _sharedPreferencesService!,
+      sharedPreferencesService: sharedPreferencesService,
       remoteDataSource: remoteDataSource,
     );
 
-    _restaurantRepository = StoryRepository(
-      sharedPreferencesService: _sharedPreferencesService!,
+    _storyRepository = StoryRepository(
+      sharedPreferencesService: sharedPreferencesService,
       remoteDataSource: remoteDataSource,
     );
 
@@ -42,8 +40,5 @@ class Injection {
 
   AuthRepository get authRepository => _authRepository!;
 
-  StoryRepository get restaurantRepository => _restaurantRepository!;
-
-  SharedPreferencesService get sharedPreferencesService =>
-      _sharedPreferencesService!;
+  StoryRepository get storyRepository => _storyRepository!;
 }

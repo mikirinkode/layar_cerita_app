@@ -7,6 +7,7 @@ import 'api_config.dart';
 import 'api_handler.dart';
 import 'request/login_body.dart';
 import 'request/register_body.dart';
+import 'response/story/story_detail_response.dart';
 
 class RemoteDataSource {
   Future<RegisterResponse> register({required RegisterBody registerBody}) async {
@@ -37,6 +38,15 @@ class RemoteDataSource {
       headers: ApiConfig.getHeadersWithAuth(token),
       fromJson: (json) => StoryListResponse.fromJson(json),
       errorMessage: 'Failed to get story list',
+    );
+  }
+
+  Future<StoryDetailResponse> getStoryDetail(String token, String storyId) async {
+    return await ApiHandler.get(
+      url: Endpoints.getDetailStoryURL(storyId),
+      headers: ApiConfig.getHeadersWithAuth(token),
+      fromJson: (json) => StoryDetailResponse.fromJson(json),
+      errorMessage: 'Failed to get story detail',
     );
   }
 }

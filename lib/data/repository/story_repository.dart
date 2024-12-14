@@ -1,5 +1,6 @@
 import '../source/local/shared_preferences_service.dart';
 import '../source/network/remote_data_source.dart';
+import '../source/network/response/story/story_detail_response.dart';
 import '../source/network/response/story/story_list_response.dart';
 
 class StoryRepository {
@@ -19,6 +20,19 @@ class StoryRepository {
         return Future.error("Unauthorized"); // TODO
       } else {
         return await _remoteDataSource.getStoryList(token);
+      }
+    } catch (e) {
+      return Future.error(e);
+    }
+  }
+
+  Future<StoryDetailResponse> getStoryDetail(String storyId) async {
+    final token = await _sharedPreferencesService.getToken();
+    try {
+      if (token == null){
+        return Future.error("Unauthorized"); // TODO
+      } else {
+        return await _remoteDataSource.getStoryDetail(token, storyId);
       }
     } catch (e) {
       return Future.error(e);

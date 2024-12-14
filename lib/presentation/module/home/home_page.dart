@@ -16,7 +16,12 @@ import '../../global_widgets/loading_indicator.dart';
 import '../../theme/app_color.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final Function(String storyId) onNavigateToStoryDetail;
+
+  const HomePage({
+    super.key,
+    required this.onNavigateToStoryDetail,
+  });
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -50,6 +55,7 @@ class _HomePageState extends State<HomePage> {
             ),
             onSuccess: () => buildStoryListView(
               stories: provider.storyList,
+              onNavigateToStoryDetail: widget.onNavigateToStoryDetail,
             ),
           );
         },
@@ -57,54 +63,67 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget buildStoryListView({required List<StoryResponse> stories}) {
+  Widget buildStoryListView({
+    required List<StoryResponse> stories,
+    required Function(String storyId) onNavigateToStoryDetail,
+  }) {
     return PageView.builder(
       scrollDirection: Axis.vertical,
       controller: PageController(viewportFraction: 1),
       physics: const BouncingScrollPhysics(),
       itemCount: stories.length,
-      itemBuilder: (context, index) =>
-          buildStoryView(story: stories[index], index: index),
+      itemBuilder: (context, index) => buildStoryView(
+        story: stories[index],
+        onNavigateToStoryDetail: onNavigateToStoryDetail,
+      ),
     );
   }
 
-  Widget buildStoryView({required StoryResponse story, int index = 0}) {
-    return Stack(
-      children: [
-        CachedNetworkImage(
-          width: double.infinity,
-          height: double.infinity,
-          imageUrl: story.photoUrl ?? "",
-          fit: BoxFit.cover,
-          cacheManager: CacheMangerProvider.restaurantImage,
-          placeholder: (context, url) => const Padding(
-            padding: EdgeInsets.all(4.0),
-            child: CupertinoActivityIndicator(
-              radius: 18,
+  Widget buildStoryView({
+    required StoryResponse story,
+    required Function(String storyId) onNavigateToStoryDetail,
+  }) {
+    return GestureDetector(
+      onTap: () {
+        onNavigateToStoryDetail(story.id);
+      },
+      child: Stack(
+        children: [
+          CachedNetworkImage(
+            width: double.infinity,
+            height: double.infinity,
+            imageUrl: story.photoUrl ?? "",
+            fit: BoxFit.cover,
+            cacheManager: CacheMangerProvider.restaurantImage,
+            placeholder: (context, url) => const Padding(
+              padding: EdgeInsets.all(4.0),
+              child: CupertinoActivityIndicator(
+                radius: 18,
+              ),
+            ),
+            errorWidget: (context, url, error) => Container(
+              color: Theme.of(context).cardColor,
+              child: const Icon(
+                Icons.image_not_supported,
+                color: AppColor.neutral500,
+              ),
             ),
           ),
-          errorWidget: (context, url, error) => Container(
-            color: Theme.of(context).cardColor,
-            child: const Icon(
-              Icons.image_not_supported,
-              color: AppColor.neutral500,
+          Align(
+            alignment: Alignment.topCenter,
+            child: buildHeader(
+              userName: story.name,
+              createdAt: story.createdAt,
             ),
           ),
-        ),
-        Align(
-          alignment: Alignment.topCenter,
-          child: buildHeader(
-            userName: story.name,
-            createdAt: story.createdAt,
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: buildBottomView(
+              storyDesc: story.description,
+            ),
           ),
-        ),
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: buildBottomView(
-            storyDesc: story.description,
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
