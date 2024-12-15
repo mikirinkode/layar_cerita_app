@@ -52,4 +52,8 @@ mixin AppNavigationMixin {
     _navStack.removeLast();
     delegate.triggerNotifyListeners();
   }
+
+  void navigateBack(){
+    popLast();
+  }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:layar_cerita_app/presentation/module/login/login_provider.dart';
+import 'package:layar_cerita_app/presentation/module/profile/profile_provider.dart';
 import 'package:layar_cerita_app/presentation/module/register/register_provider.dart';
 import 'package:layar_cerita_app/presentation/module/story_detail/story_detail_provider.dart';
 import 'package:provider/provider.dart';
@@ -45,6 +46,12 @@ Future<void> main() async {
             storyRepository: injection.storyRepository,
           ),
         ),
+        ChangeNotifierProvider(
+          create: (_) => ProfileProvider(
+            userRepository: injection.userRepository,
+            authRepository: injection.authRepository,
+          ),
+        ),
       ],
       child: MyApp(isLoggedIn: isLoggedIn),
     ),
@@ -73,7 +80,8 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'LayarCerita',
       debugShowCheckedModeBanner: false,
-      theme: AppTheme.lightTheme(context),
+      theme: AppTheme.darkTheme(context),
+      themeMode: ThemeMode.dark,
       home: Router(
         routerDelegate: appRouterDelegate,
         backButtonDispatcher: RootBackButtonDispatcher(),

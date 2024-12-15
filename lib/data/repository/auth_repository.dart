@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:layar_cerita_app/data/source/network/api_config.dart';
 import 'package:layar_cerita_app/data/source/network/remote_data_source.dart';
 
@@ -35,6 +36,7 @@ class AuthRepository {
         return Future.error(result.message);
       }
       await _sharedPreferencesService.setToken(result.loginResult.token);
+      await _sharedPreferencesService.setUserName(result.loginResult.name);
       await _sharedPreferencesService.setIsLoggedIn(true);
     } catch (e) {
       return Future.error(e);
@@ -43,5 +45,11 @@ class AuthRepository {
 
   Future<bool> getIsLoggedIn() {
     return _sharedPreferencesService.getIsLoggedIn();
+  }
+
+  Future<void> logout() {
+    debugPrint("auth on logout");
+    debugPrint("token: ${_sharedPreferencesService.getToken()}");
+    return _sharedPreferencesService.clearSession();
   }
 }

@@ -1,5 +1,6 @@
 import 'package:layar_cerita_app/data/repository/auth_repository.dart';
 import 'package:layar_cerita_app/data/repository/story_repository.dart';
+import 'package:layar_cerita_app/data/repository/user_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../data/source/local/shared_preferences_service.dart';
@@ -10,6 +11,7 @@ class Injection {
 
   static AuthRepository? _authRepository;
   static StoryRepository? _storyRepository;
+  static UserRepository? _userRepository;
 
   Injection._internal() {
     _instance = this;
@@ -35,10 +37,16 @@ class Injection {
       remoteDataSource: remoteDataSource,
     );
 
+    _userRepository = UserRepository(
+      sharedPreferencesService,
+    );
+
     return this;
   }
 
   AuthRepository get authRepository => _authRepository!;
 
   StoryRepository get storyRepository => _storyRepository!;
+
+  UserRepository get userRepository => _userRepository!;
 }

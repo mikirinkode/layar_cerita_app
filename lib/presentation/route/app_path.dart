@@ -5,4 +5,6 @@ class AppPath {
   static const String register = '/register';
   static const String home = '/home';
   static const String storyDetail = "/story-detail";
+  static const String addStory = "/add-story";
+  static const String profile = "/profile";
 }

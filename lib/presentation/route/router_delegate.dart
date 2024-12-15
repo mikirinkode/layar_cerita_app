@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:layar_cerita_app/presentation/module/add_story/add_story_page.dart';
 import 'package:layar_cerita_app/presentation/module/home/home_navigation.dart';
+import 'package:layar_cerita_app/presentation/module/profile/profile_page.dart';
 import 'package:layar_cerita_app/presentation/module/story_detail/story_detail_page.dart';
 import 'package:layar_cerita_app/presentation/route/app_navigation_mixin.dart';
 
 import '../module/home/home_page.dart';
 import '../module/login/login_page.dart';
 import '../module/register/register_page.dart';
+import 'animated_page.dart';
 import 'app_page.dart';
 import 'app_path.dart';
 import 'route_argument.dart';
@@ -46,11 +49,11 @@ class AppRouterDelegate extends RouterDelegate
 
   @override
   AppRouterDelegate get delegate => this; // TODO
-  
+
   List<AppPage> get pages => [
         AppPage(
           path: AppPath.login,
-          page: MaterialPage(
+          page: AnimatedPage(
             key: const ValueKey('LoginPage'),
             child: LoginPage(
               onNavigateToRegister: () {
@@ -61,7 +64,7 @@ class AppRouterDelegate extends RouterDelegate
         ),
         AppPage(
           path: AppPath.register,
-          page: MaterialPage(
+          page: AnimatedPage(
             key: const ValueKey('RegisterPage'),
             child: RegisterPage(
               onNavigateToLogin: () {
@@ -75,20 +78,57 @@ class AppRouterDelegate extends RouterDelegate
         ),
         AppPage(
           path: AppPath.home,
-          page: MaterialPage(
+          page: AnimatedPage(
             key: const ValueKey('HomePage'),
             child: HomePage(
-              onNavigateToStoryDetail: navigateToDetailStory 
+              onNavigateToStoryDetail: (storyId) {
+                return navigateTo(
+                  path: AppPath.storyDetail,
+                  arguments: {
+                    DetailArgs.storyId: storyId,
+                  },
+                );
+              },
+              onNavigateToAddStory: () {
+                navigateTo(path: AppPath.addStory);
+              },
+              onNavigateToProfile: () {
+                navigateTo(path: AppPath.profile);
+              },
             ),
           ),
         ),
         AppPage(
           path: AppPath.storyDetail,
-          page: MaterialPage(
+          page: AnimatedPage(
             key: const ValueKey('StoryDetailPage'),
             child: StoryDetailPage(
               storyId: arguments[DetailArgs.storyId] as String? ?? "",
             ),
+          ),
+        ),
+        AppPage(
+          path: AppPath.profile,
+          page: AnimatedPage(
+            key: const ValueKey("ProfilePage"),
+            child: ProfilePage(
+              onNavigateToHome: () {
+                navigateBack();
+              },
+              onNavigateToAddStory: () {
+                navigateTo(path: AppPath.addStory);
+              },
+              onLogoutSuccess: (){
+                navigateToAndClearStack(path: AppPath.login);
+              },
+            ),
+          ),
+        ),
+        AppPage(
+          path: AppPath.addStory,
+          page: AnimatedPage(
+            key: const ValueKey("AddStoryPage"),
+            child: AddStoryPage(),
           ),
         ),
       ];
@@ -107,5 +147,4 @@ class AppRouterDelegate extends RouterDelegate
   }
 
   void triggerNotifyListeners() => notifyListeners();
-
 }

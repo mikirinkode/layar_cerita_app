@@ -17,10 +17,14 @@ import '../../theme/app_color.dart';
 
 class HomePage extends StatefulWidget {
   final Function(String storyId) onNavigateToStoryDetail;
+  final Function() onNavigateToAddStory;
+  final Function() onNavigateToProfile;
 
   const HomePage({
     super.key,
     required this.onNavigateToStoryDetail,
+    required this.onNavigateToAddStory,
+    required this.onNavigateToProfile,
   });
 
   @override
@@ -40,6 +44,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       body: Consumer<HomeProvider>(
         builder: (context, provider, child) {
           return provider.state.when(
@@ -53,12 +58,63 @@ class _HomePageState extends State<HomePage> {
                 provider.getStoryList();
               },
             ),
-            onSuccess: () => buildStoryListView(
-              stories: provider.storyList,
-              onNavigateToStoryDetail: widget.onNavigateToStoryDetail,
+            onSuccess: () => Stack(
+              alignment: Alignment.bottomCenter,
+              children: [
+                buildStoryListView(
+                  stories: provider.storyList,
+                  onNavigateToStoryDetail: widget.onNavigateToStoryDetail,
+                ),
+                buildBottomNav(),
+              ],
             ),
           );
         },
+      ),
+    );
+  }
+
+  Widget buildBottomNav() {
+    return GestureDetector(
+      onTap: () {},
+      child: Container(
+        height: 75,
+        decoration: BoxDecoration(color: Colors.black.withOpacity(0.15)),
+        padding: UIUtils.paddingAll(16),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            IconButton(
+              highlightColor: Colors.white.withOpacity(0.15),
+              onPressed: widget.onNavigateToAddStory,
+              icon: const Icon(
+                CupertinoIcons.camera,
+                color: Colors.white,
+              ),
+            ),
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.25),
+                shape: BoxShape.circle,
+              ),
+              child: const IconButton(
+                onPressed: null,
+                icon: Icon(
+                  CupertinoIcons.home,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+            IconButton(
+              highlightColor: Colors.white.withOpacity(0.15),
+              onPressed: widget.onNavigateToProfile,
+              icon: const Icon(
+                CupertinoIcons.person,
+                color: Colors.white,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -68,7 +124,7 @@ class _HomePageState extends State<HomePage> {
     required Function(String storyId) onNavigateToStoryDetail,
   }) {
     return PageView.builder(
-      scrollDirection: Axis.vertical,
+      scrollDirection: Axis.horizontal,
       controller: PageController(viewportFraction: 1),
       physics: const BouncingScrollPhysics(),
       itemCount: stories.length,
@@ -205,28 +261,41 @@ class _HomePageState extends State<HomePage> {
       width: double.infinity,
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          begin: Alignment.bottomCenter,
-          end: Alignment.center,
+          begin: Alignment.center,
+          end: Alignment.topCenter,
           colors: [
             Colors.black.withOpacity(0.75),
-            Colors.black.withOpacity(0.25),
+            Colors.transparent
+            // Colors.transparent
           ],
         ),
       ),
-      padding:
-          UIUtils.paddingFromLTRB(left: 16, top: 32, right: 16, bottom: 32),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(
-            storyDesc,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 16,
+          Padding(
+            padding: UIUtils.paddingFromLTRB(
+              left: 16,
+              top: 64,
+              right: 16,
+              bottom: 16,
             ),
-            maxLines: 3,
-            overflow: TextOverflow.ellipsis,
+            child: Text(
+              storyDesc,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+              ),
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
+          Container(
+            color: Colors.white.withOpacity(0.25),
+            width: double.infinity,
+            height: 1,
+          ),
+          UIUtils.heightSpace(75),
         ],
       ),
     );
