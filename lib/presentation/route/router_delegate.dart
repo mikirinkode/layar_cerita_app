@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:layar_cerita_app/presentation/module/home/home_navigation.dart';
 import 'package:layar_cerita_app/presentation/module/story_detail/story_detail_page.dart';
 import 'package:layar_cerita_app/presentation/route/app_navigation_mixin.dart';
 
@@ -44,7 +45,7 @@ class AppRouterDelegate extends RouterDelegate
   }
 
   @override
-  AppRouterDelegate get delegate => this;
+  AppRouterDelegate get delegate => this; // TODO
   
   List<AppPage> get pages => [
         AppPage(
@@ -77,12 +78,7 @@ class AppRouterDelegate extends RouterDelegate
           page: MaterialPage(
             key: const ValueKey('HomePage'),
             child: HomePage(
-              onNavigateToStoryDetail: (storyId) {
-                navigateTo(
-                  path: AppPath.storyDetail,
-                  arguments: {DetailArgs.storyId: storyId},
-                );
-              },
+              onNavigateToStoryDetail: navigateToDetailStory 
             ),
           ),
         ),
@@ -101,7 +97,7 @@ class AppRouterDelegate extends RouterDelegate
     debugPrint("_navStack: $navStack");
     debugPrint("_arguments: $arguments");
     final pageResult = pages
-        .where((page) => navStack.contains(page.page.key ?? ""))
+        .where((page) => navStack.contains(page.path))
         .map((page) => page.page)
         .toList();
 
