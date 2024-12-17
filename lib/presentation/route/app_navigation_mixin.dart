@@ -43,17 +43,20 @@ mixin AppNavigationMixin {
     delegate.triggerNotifyListeners();
   }
 
-  void clearArguments() {
-    _arguments.clear();
-    delegate.triggerNotifyListeners();
-  }
+  // void clearArguments() {
+  //   _arguments.clear();
+  //   delegate.triggerNotifyListeners();
+  // }
 
-  void popLast() {
+  // void _popLast() {
+  //   _navStack.removeLast();
+  //   delegate.triggerNotifyListeners();
+  // }
+
+  void navigateBack() {
     _navStack.removeLast();
     delegate.triggerNotifyListeners();
-  }
-
-  void navigateBack(){
-    popLast();
+    debugPrint("navigateBack");
+    debugPrint('navStack: $navStack');
   }
 }

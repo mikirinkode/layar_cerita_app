@@ -1,6 +1,8 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:layar_cerita_app/presentation/module/add_story/add_story_page.dart';
+import 'package:layar_cerita_app/presentation/module/camera/camera_page.dart';
 import 'package:layar_cerita_app/presentation/module/home/home_navigation.dart';
 import 'package:layar_cerita_app/presentation/module/profile/profile_page.dart';
 import 'package:layar_cerita_app/presentation/module/story_detail/story_detail_page.dart';
@@ -30,10 +32,11 @@ class AppRouterDelegate extends RouterDelegate
       key: _navigatorKey,
       pages: getPages(),
       onPopPage: (route, result) {
+        debugPrint("onPopPage, route: $route");
         if (!route.didPop(result)) {
           return false;
         }
-        popLast();
+        navigateBack();
         return true;
       },
     );
@@ -121,7 +124,7 @@ class AppRouterDelegate extends RouterDelegate
               onNavigateToAddStory: () {
                 navigateTo(path: AppPath.addStory);
               },
-              onLogoutSuccess: (){
+              onLogoutSuccess: () {
                 navigateToAndClearStack(path: AppPath.login);
               },
             ),
@@ -131,14 +134,35 @@ class AppRouterDelegate extends RouterDelegate
           path: AppPath.addStory,
           page: AnimatedPage(
             key: const ValueKey("AddStoryPage"),
-            child: AddStoryPage(),
+            child: AddStoryPage(
+              openCamera: (cameras) {
+                navigateTo(
+                  path: AppPath.camera,
+                  arguments: {
+                    CameraArgs.cameras: cameras,
+                  },
+                );
+              },
+            ),
+          ),
+        ),
+        AppPage(
+          path: AppPath.camera,
+          page: AnimatedPage(
+            key: const ValueKey("CameraPage"),
+            child: CameraPage(
+              cameras:
+                  arguments[CameraArgs.cameras] as List<CameraDescription>? ??
+                      [],
+            ),
           ),
         ),
       ];
 
   List<Page> getPages() {
-    debugPrint("_navStack: $navStack");
-    debugPrint("_arguments: $arguments");
+    debugPrint("getPages");
+    debugPrint("navStack: $navStack");
+    debugPrint("arguments: $arguments");
     final pageResult = pages
         .where((page) => navStack.contains(page.path))
         .map((page) => page.page)

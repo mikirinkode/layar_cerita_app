@@ -6,7 +6,13 @@ class ApiConfig {
   };
 
   static Map<String, String> getHeadersWithAuth(String token) => {
-        ...headers,
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token",
+      };
+
+  static Map<String, String> getFileUploadHeader(String token) => {
+        // "Content-Type": "multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW",
+        "Content-Type": "multipart/form-data",
         "Authorization": "Bearer $token",
       };
 }

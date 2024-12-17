@@ -28,7 +28,7 @@ class ApiHandler {
         return Future.error(errorMessage);
       }
     } catch (e) {
-      debugPrint("ApiHandler::Failed to parse data. error: $e");
+      debugPrint("ApiHandler::An error occurred. error: $e");
       return Future.error(e);
     }
   }
@@ -59,7 +59,55 @@ class ApiHandler {
         return Future.error(errorMessage);
       }
     } catch (e) {
-      debugPrint("ApiHandler::Failed to get data. error: $e");
+      debugPrint("ApiHandler::An error occurred. error: $e");
+      return Future.error(e);
+    }
+  }
+
+  static Future<T> postWithImage<T>({
+    required String url,
+    required List<int> bytes,
+    required String filename,
+    required Map<String, String> headers,
+    required Map<String, String> body,
+    required T Function(Map<String, dynamic>) fromJson,
+    required String errorMessage,
+  }) async {
+    debugPrint("ApiHandler::[POST] url: $url");
+    debugPrint("ApiHandler::[POST] request body: $body");
+    try {
+      final request = http.MultipartRequest(
+        "POST",
+        Uri.parse(url),
+      );
+
+      final file = http.MultipartFile.fromBytes(
+        "photo",
+        bytes,
+        filename: filename,
+      );
+
+      request.fields.addAll(body);
+      request.files.add(file);
+      request.headers.addAll(headers);
+
+      final http.StreamedResponse streamedResponse = await request.send();
+      final int statusCode = streamedResponse.statusCode;
+      final Uint8List responseList = await streamedResponse.stream.toBytes();
+      final String responseData = String.fromCharCodes(responseList);
+
+      if (statusCode == 200 || statusCode == 201) {
+        var body = json.decode(responseData);
+        debugPrint("ApiHandler::Success. response body: $body");
+        return fromJson(body);
+      } else {
+        debugPrint(
+            "ApiHandler::Failed to get data. Status code: ${statusCode}");
+        debugPrint("ApiHandler::Failed to get data. body: ${responseData}");
+        return Future.error(errorMessage);
+      }
+    } catch (e) {
+      debugPrint("ApiHandler::An error occurred. error: $e");
       return Future.error(e);
     }
   }

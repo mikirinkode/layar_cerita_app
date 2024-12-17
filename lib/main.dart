@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:layar_cerita_app/presentation/module/add_story/add_story_provider.dart';
 import 'package:layar_cerita_app/presentation/module/login/login_provider.dart';
 import 'package:layar_cerita_app/presentation/module/profile/profile_provider.dart';
 import 'package:layar_cerita_app/presentation/module/register/register_provider.dart';
@@ -10,6 +11,7 @@ import 'di/injection.dart';
 import 'presentation/module/home/home_page.dart';
 import 'presentation/module/home/home_provider.dart';
 import 'presentation/module/login/login_page.dart';
+import 'presentation/route/page_manager.dart';
 import 'presentation/route/router_delegate.dart';
 import 'presentation/theme/app_theme.dart';
 
@@ -52,6 +54,14 @@ Future<void> main() async {
             authRepository: injection.authRepository,
           ),
         ),
+        ChangeNotifierProvider(
+          create: (_) => AddStoryProvider(
+            storyRepository: injection.storyRepository,
+          ),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => PageManager(),
+        )
       ],
       child: MyApp(isLoggedIn: isLoggedIn),
     ),

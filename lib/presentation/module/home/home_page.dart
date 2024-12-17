@@ -13,6 +13,7 @@ import 'package:provider/provider.dart';
 
 import '../../../utils/cache_manager_provider.dart';
 import '../../global_widgets/loading_indicator.dart';
+import '../../route/page_manager.dart';
 import '../../theme/app_color.dart';
 
 class HomePage extends StatefulWidget {
@@ -86,7 +87,15 @@ class _HomePageState extends State<HomePage> {
           children: [
             IconButton(
               highlightColor: Colors.white.withOpacity(0.15),
-              onPressed: widget.onNavigateToAddStory,
+              onPressed: () async {
+                final pageManager = context.read<PageManager>();
+                await widget.onNavigateToAddStory();
+                final isShouldRefresh = await pageManager.waitForResult();
+                debugPrint("homePage: isShouldRefresh: $isShouldRefresh");
+                if (isShouldRefresh == true) {
+                  context.read<HomeProvider>().getStoryList();
+                }
+              },
               icon: const Icon(
                 CupertinoIcons.camera,
                 color: Colors.white,

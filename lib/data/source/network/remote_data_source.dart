@@ -7,10 +7,12 @@ import 'api_config.dart';
 import 'api_handler.dart';
 import 'request/login_body.dart';
 import 'request/register_body.dart';
+import 'response/story/add_story_response.dart';
 import 'response/story/story_detail_response.dart';
 
 class RemoteDataSource {
-  Future<RegisterResponse> register({required RegisterBody registerBody}) async {
+  Future<RegisterResponse> register(
+      {required RegisterBody registerBody}) async {
     final body = registerBody.toJson();
     return await ApiHandler.post(
       url: Endpoints.register,
@@ -41,12 +43,30 @@ class RemoteDataSource {
     );
   }
 
-  Future<StoryDetailResponse> getStoryDetail(String token, String storyId) async {
+  Future<StoryDetailResponse> getStoryDetail(
+      String token, String storyId) async {
     return await ApiHandler.get(
       url: Endpoints.getDetailStoryURL(storyId),
       headers: ApiConfig.getHeadersWithAuth(token),
       fromJson: (json) => StoryDetailResponse.fromJson(json),
       errorMessage: 'Failed to get story detail',
+    );
+  }
+
+  Future<AddStoryResponse> addStory({
+    required String token,
+    required List<int> bytes,
+    required String filename,
+    required Map<String, String> body,
+  }) async {
+    return await ApiHandler.postWithImage(
+      url: Endpoints.stories,
+      bytes: bytes,
+      filename: filename,
+      headers: ApiConfig.getFileUploadHeader(token),
+      body: body,
+      fromJson: (json) => AddStoryResponse.fromJson(json),
+      errorMessage: 'Failed to add story',
     );
   }
 }
