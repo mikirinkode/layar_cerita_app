@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
 import '../../../utils/ui_utils.dart';
@@ -86,9 +84,9 @@ class _ProfilePageState extends State<ProfilePage> {
                       onSuccess: widget.onLogoutSuccess,
                     );
               },
-              child: Text(
+              child: const Text(
                 "Logout",
-                style: const TextStyle(
+                style: TextStyle(
                     color: Colors.red,
                     fontSize: 18,
                     fontWeight: FontWeight.bold),

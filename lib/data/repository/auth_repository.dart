@@ -1,9 +1,7 @@
 import 'package:flutter/foundation.dart';
-import 'package:layar_cerita_app/data/source/network/api_config.dart';
 import 'package:layar_cerita_app/data/source/network/remote_data_source.dart';
 
 import '../source/local/shared_preferences_service.dart';
-import '../source/network/api_handler.dart';
 import '../source/network/request/login_body.dart';
 import '../source/network/request/register_body.dart';
 

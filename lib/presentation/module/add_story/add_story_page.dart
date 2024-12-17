@@ -1,12 +1,6 @@
 import 'dart:io';
 
-import 'package:camera/camera.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:layar_cerita_app/presentation/module/home/home_page.dart';
 import 'package:layar_cerita_app/presentation/theme/app_button_style.dart';
 import 'package:layar_cerita_app/presentation/theme/app_color.dart';
 import 'package:layar_cerita_app/utils/build_context.dart';
@@ -20,11 +14,9 @@ import '../../route/page_manager.dart';
 import 'add_story_provider.dart';
 
 class AddStoryPage extends StatefulWidget {
-  final Function(List<CameraDescription> cameras) openCamera;
 
   const AddStoryPage({
     super.key,
-    required this.openCamera,
   });
 
   @override

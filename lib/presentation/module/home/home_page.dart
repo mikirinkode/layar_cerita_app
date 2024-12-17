@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:layar_cerita_app/data/source/network/response/story/story_response.dart';
 import 'package:layar_cerita_app/presentation/global_widgets/error_state_view.dart';
 import 'package:layar_cerita_app/presentation/module/home/home_provider.dart';
-import 'package:layar_cerita_app/presentation/module/register/register_provider.dart';
-import 'package:layar_cerita_app/utils/build_context.dart';
 import 'package:layar_cerita_app/utils/time_utils.dart';
 import 'package:layar_cerita_app/utils/ui_state.dart';
 import 'package:layar_cerita_app/utils/ui_utils.dart';

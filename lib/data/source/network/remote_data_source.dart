@@ -1,4 +1,3 @@
-import 'package:layar_cerita_app/data/source/network/response/api_response.dart';
 import 'package:layar_cerita_app/data/source/network/response/auth/login_response.dart';
 import 'package:layar_cerita_app/data/source/network/response/auth/register_response.dart';
 import 'package:layar_cerita_app/data/source/network/response/story/story_list_response.dart';

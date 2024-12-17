@@ -1,9 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:layar_cerita_app/data/source/network/response/story/story_detail_response.dart';
 import 'package:layar_cerita_app/data/source/network/response/story/story_response.dart';
-import 'package:layar_cerita_app/main.dart';
 import 'package:layar_cerita_app/presentation/module/story_detail/story_detail_provider.dart';
 import 'package:layar_cerita_app/utils/time_utils.dart';
 import 'package:layar_cerita_app/utils/ui_state.dart';
@@ -14,7 +12,6 @@ import '../../../utils/cache_manager_provider.dart';
 import '../../global_widgets/error_state_view.dart';
 import '../../global_widgets/loading_indicator.dart';
 import '../../theme/app_color.dart';
-import '../home/home_provider.dart';
 
 class StoryDetailPage extends StatefulWidget {
   final String storyId;
@@ -39,7 +36,7 @@ class _StoryDetailPageState extends State<StoryDetailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Detail"),
+        title: const Text("Detail"),
       ),
       body: Consumer<StoryDetailProvider>(
         builder: (context, provider, child) {

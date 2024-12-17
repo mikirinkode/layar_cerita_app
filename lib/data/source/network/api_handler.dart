@@ -102,8 +102,8 @@ class ApiHandler {
         return fromJson(body);
       } else {
         debugPrint(
-            "ApiHandler::Failed to get data. Status code: ${statusCode}");
-        debugPrint("ApiHandler::Failed to get data. body: ${responseData}");
+            "ApiHandler::Failed to get data. Status code: $statusCode");
+        debugPrint("ApiHandler::Failed to get data. body: $responseData");
         return Future.error(errorMessage);
       }
     } catch (e) {

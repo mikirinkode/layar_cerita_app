@@ -133,7 +133,7 @@ class RegisterPage extends StatelessWidget {
                     );
                   },
                   style: AppButtonStyle.filledPrimary,
-                  child: Text("Daftar"),
+                  child: const Text("Daftar"),
                 ),
               ),
               UIUtils.heightSpace(24),
@@ -141,11 +141,11 @@ class RegisterPage extends StatelessWidget {
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Sudah punya akun?"),
+                  const Text("Sudah punya akun?"),
                   UIUtils.widthSpace(16),
                   TextButton(
                     onPressed: onNavigateToLogin,
-                    child: Text("Login"),
+                    child: const Text("Login"),
                   ),
                 ],
               )

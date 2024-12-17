@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class AnimatedPage extends Page {
   final Widget child;
 
-  AnimatedPage({required this.child, required LocalKey key}) : super(key: key);
+  const AnimatedPage({required this.child, required LocalKey key}) : super(key: key);
 
   @override
   Route createRoute(BuildContext context) {

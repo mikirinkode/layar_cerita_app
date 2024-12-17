@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:layar_cerita_app/presentation/theme/app_color.dart';
 
 import '../../utils/ui_utils.dart';
 
@@ -16,6 +14,10 @@ class LoadingIndicator extends StatelessWidget {
       decoration: BoxDecoration(
         color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: Theme.of(context).dividerColor,
+          width: 1,
+        ),
       ),
       padding: UIUtils.paddingAll(16),
       child: Row(
@@ -32,9 +34,7 @@ class LoadingIndicator extends StatelessWidget {
               padding: UIUtils.paddingLeft(16),
               child: Text(
                 message ?? '',
-                style: TextStyle(
-                  // color: AppColor.neutral700,
-                ),
+                style: const TextStyle(),
               ),
             ),
           ),

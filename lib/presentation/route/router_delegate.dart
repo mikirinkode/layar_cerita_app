@@ -1,9 +1,6 @@
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:layar_cerita_app/presentation/module/add_story/add_story_page.dart';
-import 'package:layar_cerita_app/presentation/module/camera/camera_page.dart';
-import 'package:layar_cerita_app/presentation/module/home/home_navigation.dart';
 import 'package:layar_cerita_app/presentation/module/profile/profile_page.dart';
 import 'package:layar_cerita_app/presentation/module/story_detail/story_detail_page.dart';
 import 'package:layar_cerita_app/presentation/route/app_navigation_mixin.dart';
@@ -51,7 +48,7 @@ class AppRouterDelegate extends RouterDelegate
   }
 
   @override
-  AppRouterDelegate get delegate => this; // TODO
+  AppRouterDelegate get delegate => this;
 
   List<AppPage> get pages => [
         AppPage(
@@ -132,29 +129,9 @@ class AppRouterDelegate extends RouterDelegate
         ),
         AppPage(
           path: AppPath.addStory,
-          page: AnimatedPage(
-            key: const ValueKey("AddStoryPage"),
-            child: AddStoryPage(
-              openCamera: (cameras) {
-                navigateTo(
-                  path: AppPath.camera,
-                  arguments: {
-                    CameraArgs.cameras: cameras,
-                  },
-                );
-              },
-            ),
-          ),
-        ),
-        AppPage(
-          path: AppPath.camera,
-          page: AnimatedPage(
-            key: const ValueKey("CameraPage"),
-            child: CameraPage(
-              cameras:
-                  arguments[CameraArgs.cameras] as List<CameraDescription>? ??
-                      [],
-            ),
+          page: const AnimatedPage(
+            key: ValueKey("AddStoryPage"),
+            child: AddStoryPage(),
           ),
         ),
       ];

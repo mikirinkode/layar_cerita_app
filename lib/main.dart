@@ -5,12 +5,9 @@ import 'package:layar_cerita_app/presentation/module/profile/profile_provider.da
 import 'package:layar_cerita_app/presentation/module/register/register_provider.dart';
 import 'package:layar_cerita_app/presentation/module/story_detail/story_detail_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:layar_cerita_app/presentation/module/register/register_page.dart';
 
 import 'di/injection.dart';
-import 'presentation/module/home/home_page.dart';
 import 'presentation/module/home/home_provider.dart';
-import 'presentation/module/login/login_page.dart';
 import 'presentation/route/page_manager.dart';
 import 'presentation/route/router_delegate.dart';
 import 'presentation/theme/app_theme.dart';
