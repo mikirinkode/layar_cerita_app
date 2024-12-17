@@ -3,17 +3,16 @@ import 'package:flutter/material.dart';
 import '../../utils/ui_utils.dart';
 import 'app_color.dart';
 
-
 class AppButtonStyle {
   AppButtonStyle._();
 
   static ButtonStyle filledPrimary = ButtonStyle(
     backgroundColor: WidgetStateProperty.resolveWith(
-          (states) {
+      (states) {
         if (states.contains(WidgetState.disabled)) {
           return AppColor.neutral200;
         }
-        return AppColor.primary500;
+        return AppColor.primary300;
       },
     ),
     padding: WidgetStateProperty.all(
@@ -24,7 +23,7 @@ class AppButtonStyle {
       ),
     ),
     foregroundColor: WidgetStateProperty.resolveWith(
-          (states) {
+      (states) {
         if (states.contains(WidgetState.disabled)) {
           return AppColor.neutral500;
         }

@@ -14,7 +14,7 @@ class LoadingIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(16),
       ),
       padding: UIUtils.paddingAll(16),
@@ -22,9 +22,9 @@ class LoadingIndicator extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
-          const CupertinoActivityIndicator(
+          CupertinoActivityIndicator(
             radius: 16,
-            color: AppColor.neutral700,
+            color: Theme.of(context).primaryColor,
           ),
           Visibility(
             visible: message != null,
@@ -33,7 +33,7 @@ class LoadingIndicator extends StatelessWidget {
               child: Text(
                 message ?? '',
                 style: TextStyle(
-                  color: AppColor.neutral700,
+                  // color: AppColor.neutral700,
                 ),
               ),
             ),

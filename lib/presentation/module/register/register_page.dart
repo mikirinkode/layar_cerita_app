@@ -28,7 +28,6 @@ class RegisterPage extends StatelessWidget {
         builder: (context, provider, child) {
           return SafeArea(
             child: Stack(
-              alignment: Alignment.center,
               children: [
                 body(),
                 provider.registerState.when(
@@ -55,15 +54,23 @@ class RegisterPage extends StatelessWidget {
   Widget body() {
     return Consumer<RegisterProvider>(builder: (context, provider, child) {
       return SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         padding: UIUtils.paddingAll(24),
         child: Form(
           key: provider.registerFormKey,
           child: Column(
             children: [
-              TextField(
+              TextFormField(
                 keyboardType: TextInputType.emailAddress,
                 textInputAction: TextInputAction.next,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                validator: (value) {
+                  if (value?.isEmpty == true) {
+                    return "Nama tidak boleh kosong.";
+                  } else {
+                    return null;
+                  }
+                },
                 decoration: const InputDecoration(
                   hintText: "Nama",
                   prefixIcon: Icon(

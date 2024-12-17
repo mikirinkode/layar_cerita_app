@@ -70,13 +70,15 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ),
             UIUtils.heightSpace(16),
-            Text(
-              "UserName",
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 24,
-              ),
-            ),
+            Consumer<ProfileProvider>(builder: (context, provider, child) {
+              return Text(
+                provider.userName,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                ),
+              );
+            }),
             UIUtils.heightSpace(16),
             TextButton(
               onPressed: () {
@@ -121,7 +123,7 @@ class _ProfilePageState extends State<ProfilePage> {
               onPressed: widget.onNavigateToHome,
               highlightColor: Colors.white.withOpacity(0.15),
               icon: const Icon(
-                CupertinoIcons.home,
+                CupertinoIcons.house,
                 color: Colors.white,
               ),
             ),
@@ -133,7 +135,7 @@ class _ProfilePageState extends State<ProfilePage> {
               child: const IconButton(
                 onPressed: null,
                 icon: Icon(
-                  CupertinoIcons.person,
+                  CupertinoIcons.person_fill,
                   color: Colors.white,
                 ),
               ),

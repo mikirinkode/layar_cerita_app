@@ -61,11 +61,11 @@ class AppTheme {
   static darkTheme(BuildContext context) {
     return ThemeData(
       colorScheme: ColorScheme.fromSeed(
-        seedColor: AppColor.primary400,
-        primary: AppColor.primary400,
+        seedColor: AppColor.primary300,
+        primary: AppColor.primary300,
         brightness: Brightness.dark,
       ),
-      primaryColor: AppColor.primary400,
+      primaryColor: AppColor.primary300,
       scaffoldBackgroundColor: AppColor.darkBackgroundColor,
       cardColor: AppColor.neutral800,
       dividerColor: AppColor.neutral500,
@@ -98,7 +98,7 @@ class AppTheme {
         color: Colors.white,
       ),
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
-        backgroundColor: AppColor.primary400,
+        backgroundColor: AppColor.primary300,
         foregroundColor: AppColor.neutral700,
         extendedTextStyle: TextStyle(
           fontSize: 14,

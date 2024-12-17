@@ -59,6 +59,9 @@ class AppRouterDelegate extends RouterDelegate
               onNavigateToRegister: () {
                 navigateToAndClearStack(path: AppPath.register);
               },
+              onNavigateToHome: () {
+                navigateToAndClearStack(path: AppPath.home);
+              },
             ),
           ),
         ),

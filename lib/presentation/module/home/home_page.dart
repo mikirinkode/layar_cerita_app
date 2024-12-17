@@ -100,7 +100,7 @@ class _HomePageState extends State<HomePage> {
               child: const IconButton(
                 onPressed: null,
                 icon: Icon(
-                  CupertinoIcons.home,
+                  CupertinoIcons.house_fill,
                   color: Colors.white,
                 ),
               ),
