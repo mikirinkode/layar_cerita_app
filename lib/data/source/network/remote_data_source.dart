@@ -42,6 +42,16 @@ class RemoteDataSource {
     );
   }
 
+  
+  Future<StoryListResponse> getPaginationStory(String token, int page, int size) async {
+    return await ApiHandler.get(
+      url: Endpoints.getPaginationStoryURL(page, size),
+      headers: ApiConfig.getHeadersWithAuth(token),
+      fromJson: (json) => StoryListResponse.fromJson(json),
+      errorMessage: 'Failed to get story list',
+    );
+  }
+
   Future<StoryDetailResponse> getStoryDetail(
       String token, String storyId) async {
     return await ApiHandler.get(

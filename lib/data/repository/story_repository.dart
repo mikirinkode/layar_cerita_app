@@ -29,6 +29,19 @@ class StoryRepository {
     }
   }
 
+    Future<StoryListResponse> getPaginationStory(int page, int size) async {
+    final token = await _sharedPreferencesService.getToken();
+    try {
+      if (token == null) {
+        return Future.error("Unauthorized"); // TODO
+      } else {
+        return await _remoteDataSource.getPaginationStory(token, page, size);
+      }
+    } catch (e) {
+      return Future.error(e);
+    }
+  }
+
   Future<StoryDetailResponse> getStoryDetail(String storyId) async {
     final token = await _sharedPreferencesService.getToken();
     try {

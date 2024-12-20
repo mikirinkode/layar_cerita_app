@@ -23,4 +23,5 @@ class Endpoints {
   static const register = "$baseURL/register";
   static const stories = "$baseURL/stories";
   static String getDetailStoryURL(String id) => "$stories/$id";
+  static String getPaginationStoryURL(int page, int size) => "$stories?page=$page&size=$size";
 }

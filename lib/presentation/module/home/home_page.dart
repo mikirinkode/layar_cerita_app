@@ -31,13 +31,32 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final PageController pageController = PageController(viewportFraction: 1);
+
   @override
   void initState() {
     super.initState();
+    final provider = context.read<HomeProvider>();
+
+    pageController.addListener(() {
+      if (pageController.position.pixels >=
+          pageController.position.maxScrollExtent) {
+        debugPrint("homePage, scrolled to end. fetch new data");
+        if (provider.pageItems != null) {
+          provider.getStoryList();
+        }
+      }
+    });
 
     Future.microtask(() {
-      context.read<HomeProvider>().getStoryList();
+      provider.getStoryList();
     });
+  }
+
+  @override
+  void dispose() {
+    pageController.dispose();
+    super.dispose();
   }
 
   @override
@@ -63,6 +82,7 @@ class _HomePageState extends State<HomePage> {
                 buildStoryListView(
                   stories: provider.storyList,
                   onNavigateToStoryDetail: widget.onNavigateToStoryDetail,
+                  pageItems: provider.pageItems,
                 ),
                 buildBottomNav(),
               ],
@@ -129,16 +149,19 @@ class _HomePageState extends State<HomePage> {
   Widget buildStoryListView({
     required List<StoryResponse> stories,
     required Function(String storyId) onNavigateToStoryDetail,
+    required int? pageItems,
   }) {
     return PageView.builder(
       scrollDirection: Axis.horizontal,
-      controller: PageController(viewportFraction: 1),
+      controller: pageController,
       physics: const BouncingScrollPhysics(),
-      itemCount: stories.length,
-      itemBuilder: (context, index) => buildStoryView(
-        story: stories[index],
-        onNavigateToStoryDetail: onNavigateToStoryDetail,
-      ),
+      itemCount: stories.length + (pageItems != null ? 1 : 0),
+      itemBuilder: (context, index) =>
+          (index == stories.length && pageItems != null)
+              ? Center(child: LoadingIndicator(message: "Loading..."))
+              : buildStoryView(
+                  story: stories[index],
+                  onNavigateToStoryDetail: onNavigateToStoryDetail),
     );
   }
 
