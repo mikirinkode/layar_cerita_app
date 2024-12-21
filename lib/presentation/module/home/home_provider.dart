@@ -26,7 +26,6 @@ class HomeProvider extends ChangeNotifier {
 
   Future<void> getStoryList() async {
     try {
-
       if (pageItems == 1) {
         _state = UIState.loading(message: "Loading...");
         notifyListeners();
@@ -52,5 +51,13 @@ class HomeProvider extends ChangeNotifier {
       _state = UIState.error(e.toString());
       notifyListeners();
     }
+  }
+
+  void refreshFromStart() {
+    debugPrint("refreshFromStart");
+    pageItems = 1;
+    _storyList.clear();
+    notifyListeners();
+    getStoryList();
   }
 }

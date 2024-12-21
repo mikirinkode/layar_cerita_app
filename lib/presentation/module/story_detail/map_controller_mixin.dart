@@ -9,6 +9,9 @@ mixin MapControllerMixin {
 
   final Set<Marker> markers = {};
 
+  LatLng? _selectedLatlng;
+  LatLng? get selectedLatlng => _selectedLatlng;
+
   triggerNotifyListener();
 
   void onMapCreated(GoogleMapController controller) {
@@ -54,5 +57,11 @@ mixin MapControllerMixin {
   void initStoryLocation({required double lat, required double lng}) async {
     addMarker(lat: lat, lng: lng);
     moveWithAnimation(lat: lat, lng: lng);
+  }
+
+  void onTapMap(LatLng latLng) async {
+    _selectedLatlng = latLng;
+    addMarker(lat: latLng.latitude, lng: latLng.longitude);
+    moveWithAnimation(lat: latLng.latitude, lng: latLng.longitude);
   }
 }

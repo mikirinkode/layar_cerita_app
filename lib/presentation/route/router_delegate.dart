@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:layar_cerita_app/presentation/module/add_story/add_story_page.dart';
+import 'package:layar_cerita_app/presentation/module/pick_location_map/pick_location_page.dart';
 import 'package:layar_cerita_app/presentation/module/profile/profile_page.dart';
 import 'package:layar_cerita_app/presentation/module/story_detail/story_detail_page.dart';
 import 'package:layar_cerita_app/presentation/route/app_navigation_mixin.dart';
@@ -131,9 +132,27 @@ class AppRouterDelegate extends RouterDelegate
         ),
         AppPage(
           path: AppPath.addStory,
-          page: const AnimatedPage(
+          page: AnimatedPage(
             key: ValueKey("AddStoryPage"),
-            child: AddStoryPage(),
+            child: AddStoryPage(
+              onNavigateToPickLocation: () {
+                navigateTo(path: AppPath.pickLocation);
+              },
+              onNavigateBack: (){
+                navigateBack();
+              },
+            ),
+          ),
+        ),
+        AppPage(
+          path: AppPath.pickLocation,
+          page: AnimatedPage(
+            key: ValueKey("PickLocationPage"),
+            child: PickLocationPage(
+              onNavigateBack: (){
+                navigateBack();
+              },
+            ),
           ),
         ),
       ];

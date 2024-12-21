@@ -109,12 +109,12 @@ class _HomePageState extends State<HomePage> {
               onPressed: () async {
                 final pageManager = context.read<PageManager>();
                 await widget.onNavigateToAddStory();
-                final argResult = await pageManager.waitForResult();
+                final argResult = await pageManager.waitForResult(HomeArgs.resultFromAddStory);
                 final isShouldRefresh =
                     argResult[HomeArgs.shouldRefresh] as bool? ?? false;
                 debugPrint("homePage: isShouldRefresh: $isShouldRefresh");
                 if (isShouldRefresh == true) {
-                  context.read<HomeProvider>().getStoryList();
+                  context.read<HomeProvider>().refreshFromStart();
                 }
               },
               icon: const Icon(

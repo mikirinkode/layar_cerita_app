@@ -10,6 +10,9 @@ class AddStoryProvider extends ChangeNotifier {
   XFile? imageFile;
   String imagePath = '';
   String description = '';
+  double? selectedLat;
+  double? selectedLng;
+
   bool isValid = false;
 
   bool isShouldRefreshPreviousPage = false;
@@ -84,6 +87,12 @@ class AddStoryProvider extends ChangeNotifier {
     _checkIsValid();
   }
 
+  void onUpdateLocation(double lat, double lng) {
+    selectedLat = lat;
+    selectedLng = lng;
+    notifyListeners();
+  }
+
   void _checkIsValid() {
     isValid =
         imageFile != null && imagePath.isNotEmpty && description.isNotEmpty;
@@ -98,7 +107,11 @@ class AddStoryProvider extends ChangeNotifier {
     try {
       final filename = imageFile?.name ?? "";
       final bytes = await imageFile?.readAsBytes();
-      final addStorybody = AddStoryBody(description: description);
+      final addStorybody = AddStoryBody(
+        description: description,
+        lat: selectedLat,
+        lon: selectedLng,
+      );
 
       if (bytes != null) {
         final compressedBytes = await ImageUtils.compressImage(bytes);
@@ -126,6 +139,7 @@ class AddStoryProvider extends ChangeNotifier {
 
   resetState() {
     _addStoryState = UIState.initial();
+    isShouldRefreshPreviousPage = false;
     notifyListeners();
   }
 }

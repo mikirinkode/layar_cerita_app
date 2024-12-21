@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 
 import 'di/injection.dart';
 import 'presentation/module/home/home_provider.dart';
+import 'presentation/module/pick_location_map/pick_location_provider.dart';
 import 'presentation/route/page_manager.dart';
 import 'presentation/route/router_delegate.dart';
 import 'presentation/theme/app_theme.dart';
@@ -55,6 +56,9 @@ Future<void> main() async {
           create: (_) => AddStoryProvider(
             storyRepository: injection.storyRepository,
           ),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => PickLocationProvider(),
         ),
         ChangeNotifierProvider(
           create: (_) => PageManager(),
