@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:layar_cerita_app/presentation/route/route_argument.dart';
 import 'package:layar_cerita_app/presentation/theme/app_button_style.dart';
 import 'package:layar_cerita_app/presentation/theme/app_color.dart';
 import 'package:layar_cerita_app/utils/build_context.dart';
@@ -14,7 +15,6 @@ import '../../route/page_manager.dart';
 import 'add_story_provider.dart';
 
 class AddStoryPage extends StatefulWidget {
-
   const AddStoryPage({
     super.key,
   });
@@ -30,9 +30,11 @@ class _AddStoryPageState extends State<AddStoryPage> {
       return PopScope(
         canPop: true,
         onPopInvokedWithResult: (bool didPop, Object? _) async {
-          context
-              .read<PageManager>()
-              .returnData(provider.isShouldRefreshPreviousPage);
+          context.read<PageManager>().returnData(
+            {
+              HomeArgs.shouldRefresh: provider.isShouldRefreshPreviousPage,
+            },
+          );
         },
         child: Scaffold(
           appBar: AppBar(title: const Text("Cerita Baru")),

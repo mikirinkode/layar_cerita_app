@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:layar_cerita_app/data/source/network/response/story/story_response.dart';
 import 'package:layar_cerita_app/presentation/global_widgets/error_state_view.dart';
 import 'package:layar_cerita_app/presentation/module/home/home_provider.dart';
+import 'package:layar_cerita_app/presentation/route/route_argument.dart';
 import 'package:layar_cerita_app/utils/time_utils.dart';
 import 'package:layar_cerita_app/utils/ui_state.dart';
 import 'package:layar_cerita_app/utils/ui_utils.dart';
@@ -108,7 +109,9 @@ class _HomePageState extends State<HomePage> {
               onPressed: () async {
                 final pageManager = context.read<PageManager>();
                 await widget.onNavigateToAddStory();
-                final isShouldRefresh = await pageManager.waitForResult();
+                final argResult = await pageManager.waitForResult();
+                final isShouldRefresh =
+                    argResult[HomeArgs.shouldRefresh] as bool? ?? false;
                 debugPrint("homePage: isShouldRefresh: $isShouldRefresh");
                 if (isShouldRefresh == true) {
                   context.read<HomeProvider>().getStoryList();
