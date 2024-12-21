@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:layar_cerita_app/data/repository/story_repository.dart';
 import 'package:layar_cerita_app/data/source/network/response/story/story_response.dart';
@@ -11,7 +10,7 @@ class HomeProvider extends ChangeNotifier {
 
   UIState get state => _state;
 
-  List<StoryResponse> _storyList = [];
+  final List<StoryResponse> _storyList = [];
 
   List<StoryResponse> get storyList => _storyList;
 

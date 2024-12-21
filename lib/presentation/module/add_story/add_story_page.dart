@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:layar_cerita_app/presentation/route/route_argument.dart';
 import 'package:layar_cerita_app/presentation/theme/app_button_style.dart';
@@ -177,8 +176,8 @@ class _AddStoryPageState extends State<AddStoryPage> {
                         Text(provider.selectedLat == null
                             ? "Pilih Lokasi"
                             : "Lokasi terpilih:"),
-                        Spacer(),
-                        Icon(
+                        const Spacer(),
+                        const Icon(
                           Icons.add_location_rounded,
                         ),
                       ],

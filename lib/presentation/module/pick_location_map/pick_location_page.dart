@@ -1,6 +1,5 @@
 
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:layar_cerita_app/presentation/module/pick_location_map/pick_location_provider.dart';
@@ -51,7 +50,7 @@ class PickLocationPage extends StatelessWidget {
                     onNavigateBack.call();
                   },
             style: AppButtonStyle.filledPrimary,
-            child: Text("Konfirmasi Lokasi"),
+            child: const Text("Konfirmasi Lokasi"),
           ),
         ),
       );

@@ -161,7 +161,7 @@ class _HomePageState extends State<HomePage> {
       itemCount: stories.length + (pageItems != null ? 1 : 0),
       itemBuilder: (context, index) =>
           (index == stories.length && pageItems != null)
-              ? Center(child: LoadingIndicator(message: "Loading..."))
+              ? const Center(child: LoadingIndicator(message: "Loading..."))
               : buildStoryView(
                   story: stories[index],
                   onNavigateToStoryDetail: onNavigateToStoryDetail),

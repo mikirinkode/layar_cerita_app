@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:layar_cerita_app/data/repository/story_repository.dart';
 import 'package:layar_cerita_app/data/source/network/response/story/story_detail_response.dart';
 import 'package:layar_cerita_app/utils/ui_state.dart';

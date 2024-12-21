@@ -133,7 +133,7 @@ class AppRouterDelegate extends RouterDelegate
         AppPage(
           path: AppPath.addStory,
           page: AnimatedPage(
-            key: ValueKey("AddStoryPage"),
+            key: const ValueKey("AddStoryPage"),
             child: AddStoryPage(
               onNavigateToPickLocation: () {
                 navigateTo(path: AppPath.pickLocation);
@@ -147,7 +147,7 @@ class AppRouterDelegate extends RouterDelegate
         AppPage(
           path: AppPath.pickLocation,
           page: AnimatedPage(
-            key: ValueKey("PickLocationPage"),
+            key: const ValueKey("PickLocationPage"),
             child: PickLocationPage(
               onNavigateBack: (){
                 navigateBack();
