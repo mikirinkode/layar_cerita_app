@@ -10,7 +10,7 @@ mixin AppNavigationMixin {
 
   Map<String, dynamic> get arguments => _arguments;
 
-  AppRouterDelegate get delegate;
+  triggerNotifyListener();
 
   void navigateTo({
     required String path,
@@ -22,7 +22,7 @@ mixin AppNavigationMixin {
     if (arguments != null) {
       _arguments.addAll(arguments);
     }
-    delegate.triggerNotifyListeners();
+    triggerNotifyListener();
   }
 
   void navigateToAndClearStack({
@@ -35,27 +35,27 @@ mixin AppNavigationMixin {
     if (arguments != null) {
       _arguments.addAll(arguments);
     }
-    delegate.triggerNotifyListeners();
+    triggerNotifyListener();
   }
 
   void clearStack() {
     _navStack = [];
-    delegate.triggerNotifyListeners();
+    triggerNotifyListener();
   }
 
   // void clearArguments() {
   //   _arguments.clear();
-  //   delegate.triggerNotifyListeners();
+  //   triggerNotifyListener();
   // }
 
   // void _popLast() {
   //   _navStack.removeLast();
-  //   delegate.triggerNotifyListeners();
+  //   triggerNotifyListener();
   // }
 
   void navigateBack() {
     _navStack.removeLast();
-    delegate.triggerNotifyListeners();
+    triggerNotifyListener();
     debugPrint("navigateBack");
     debugPrint('navStack: $navStack');
   }

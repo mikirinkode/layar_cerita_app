@@ -48,7 +48,9 @@ class AppRouterDelegate extends RouterDelegate
   }
 
   @override
-  AppRouterDelegate get delegate => this;
+  triggerNotifyListener() {
+    notifyListeners();
+  }
 
   List<AppPage> get pages => [
         AppPage(

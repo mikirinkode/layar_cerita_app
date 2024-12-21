@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:layar_cerita_app/data/source/network/response/story/story_response.dart';
 import 'package:layar_cerita_app/presentation/module/story_detail/story_detail_provider.dart';
 import 'package:layar_cerita_app/utils/time_utils.dart';
@@ -88,7 +89,7 @@ class _StoryDetailPageState extends State<StoryDetailPage> {
               ),
             ),
           ),
-          UIUtils.heightSpace(16),
+          UIUtils.heightSpace(24),
           Container(
             width: double.infinity,
             decoration: BoxDecoration(
@@ -128,7 +129,34 @@ class _StoryDetailPageState extends State<StoryDetailPage> {
               ],
             ),
           ),
+          UIUtils.heightSpace(24),
+          Visibility(
+            visible: (story?.lat ?? 0) != 0 && (story?.lon ?? 0) != 0,
+            child: buildMap(lat: story?.lat ?? 0, lng: story?.lon ?? 0),
+          ),
         ],
+      ),
+    );
+  }
+
+  Widget buildMap({required lat, required lng}) {
+    final provider = context.read<StoryDetailProvider>();
+
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(24),
+      child: SizedBox(
+        width: double.infinity,
+        height: 300,
+        child: GoogleMap(
+          markers: provider.markers,
+          initialCameraPosition: CameraPosition(
+            target: provider.defaultLatLng,
+          ),
+          onMapCreated: (controller) {
+            provider.onMapCreated(controller);
+            provider.initStoryLocation(lat: lat, lng: lng);
+          },
+        ),
       ),
     );
   }
