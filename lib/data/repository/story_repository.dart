@@ -61,7 +61,7 @@ class StoryRepository {
     required AddStoryBody addStorybody,
   }) async {
     final token = await _sharedPreferencesService.getToken();
-    final body = addStorybody.toJson();
+    final body = addStorybody.toFieldMap();
     try {
       if (token == null) {
         return Future.error("Unauthorized"); // TODO
